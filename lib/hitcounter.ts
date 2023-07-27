@@ -9,12 +9,14 @@ export interface HitCounterProps {
 
 export class HitCounter extends Construct {
     public readonly handler: lambda.Function;
+    public readonly table: dynamodb.Table;
     constructor(scope: Construct, id: string, props: HitCounterProps) {
         super(scope, id);
 
-        const table = new dynamodb.Table(this, 'Hits', {
+        this.table = new dynamodb.Table(this, 'Hits', {
             partitionKey: {name: 'path', type: dynamodb.AttributeType.STRING},
-            deletionProtection: true
+            deletionProtection: true,
+            removalPolicy: cdk.RemovalPolicy.DESTROY
         });
 
         this.handler = new lambda.Function(this, 'HitCounterHandler', {
@@ -23,13 +25,11 @@ export class HitCounter extends Construct {
             code: lambda.Code.fromAsset('lambda'),
             environment: {
                 DOWNSTREAM_FUNCTION_NAME: props.downstream.functionName,
-                HITS_TABLE_NAME: table.tableName
+                HITS_TABLE_NAME: this.table.tableName
             }
         });
 
-
-
-        table.grantReadWriteData(this.handler);
+        this.table.grantReadWriteData(this.handler);
 
         props.downstream.grantInvoke(this.handler);
     };
