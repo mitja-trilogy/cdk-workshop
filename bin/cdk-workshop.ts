@@ -5,6 +5,6 @@ import { CdkWorkshopStack } from '../lib/cdk-workshop-stack';
 const app = new cdk.App();
 new CdkWorkshopStack(app, 'CdkWorkshopStack', {
     tags: {
-        "Owner": "RAM-AWS-Dev-WSEngineering-WSEng-Admin/mitjaresek",
+        "Owner": "856284715153",
     }
 });
