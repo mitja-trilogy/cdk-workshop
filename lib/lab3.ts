@@ -15,24 +15,26 @@ export class lab3 extends cdk.Stack {
         super(scope, id, props);
 
         // RidesBookingTable
-        const ridesBookingTable = new dynamodb.Table(this, 'RidesBookingTable', {
-            tableName: `RidesBooking-${this.stackName}`,
+        const ridesBookingTable = new dynamodb.Table(this, 'RideBokingTable', {
+            tableName: `RideBoking-${this.stackName}`,
             partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
             sortKey: { name: 'responder', type: dynamodb.AttributeType.STRING },
             billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+            deletionProtection: true,
+            removalPolicy: cdk.RemovalPolicy.DESTROY
         });
 
         // RequestForQuotesTopic
         const requestForQuotesTopic = new sns.Topic(this, 'RequestForQuotesTopic');
 
         // RequestForQuotesResponseQueue
-        const requestForQuotesResponseQueue = new sqs.Queue(this, 'RequestForQuotesResponseQueue', {
+        const requestForQuotesResponseQueue = new sqs.Queue(this, 'RequestForQuotesResponseQueue2', {
             visibilityTimeout: cdk.Duration.seconds(120),
         });
 
         // RequestForQuotesService
         const requestForQuotesService = new lambda.Function(this, 'RequestForQuotesService', {
-            runtime: lambda.Runtime.PYTHON_3_7,
+            runtime: lambda.Runtime.NODEJS_16_X,
             code: lambda.Code.fromAsset('lambda'),
             handler: 'requestForQuotesService.handler',
             environment: {
@@ -52,9 +54,10 @@ export class lab3 extends cdk.Stack {
 
         for (let i = 1; i <= 10; i++) {
             const unicornManagementResource = new lambda.Function(this, `UnicornManagementResource${i}`, {
-                runtime: lambda.Runtime.PYTHON_3_7,
+                runtime: lambda.Runtime.NODEJS_16_X,
                 code: lambda.Code.fromAsset('lambda'),
                 handler: 'genericUnicornManagementService.handler',
+                timeout: cdk.Duration.seconds(120),
                 environment: {
                     SERVICE_NAME: `UnicornManagementResource${i}`,
                     QUEUE_URL: requestForQuotesResponseQueue.queueUrl,
@@ -70,7 +73,7 @@ export class lab3 extends cdk.Stack {
 
         // QuotesResponseService
         const quotesResponseService = new lambda.Function(this, 'QuotesResponseService', {
-            runtime: lambda.Runtime.PYTHON_3_7,
+            runtime: lambda.Runtime.NODEJS_16_X,
             code: lambda.Code.fromAsset('lambda'),
             handler: 'quotesResponseService.handler',
             environment: {

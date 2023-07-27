@@ -7,6 +7,6 @@ import {lab3} from "../lib/lab3";
 const app = new cdk.App();
 new lab3(app, 'lab3', {
     tags: {
-        "Owner": "856284715153",
+        "Owner": "mitja.resek",
     }
 });
