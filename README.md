@@ -13,3 +13,20 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 * `cdk deploy`      deploy this stack to your default AWS account/region
 * `cdk diff`        compare deployed stack with current state
 * `cdk synth`       emits the synthesized CloudFormation template
+
+
+
+    const unicornService = new lambdaNodejs.NodejsFunction(this, 'unicorn', {
+      runtime: lambda.Runtime.NODEJS_16_X,
+      entry: path.join(__dirname, '..', 'lambda', 'unicornService.js'),
+      handler: 'handler',
+      description: 'Unicorn service function',
+      reservedConcurrentExecutions: undefined,
+      environment: {
+        TOPIC_ARN: topic.topicArn,
+        TABLE_NAME: table.tableName
+      },
+      bundling: {
+        externalModules: ['uuid'],
+      }
+    });

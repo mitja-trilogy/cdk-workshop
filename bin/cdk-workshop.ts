@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import { CdkWorkshopStack } from '../lib/cdk-workshop-stack';
+import { CdkWildRyde } from '../lib/wild-ryde';
 
 const app = new cdk.App();
-new CdkWorkshopStack(app, 'CdkWorkshopStack', {
+new CdkWildRyde(app, 'CdkWildRyde', {
     tags: {
         "Owner": "856284715153",
     }

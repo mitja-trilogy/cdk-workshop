@@ -20,8 +20,10 @@
     "typescript": "~5.1.6"
   },
   "dependencies": {
+    "@aws-cdk/aws-lambda-nodejs": "^1.204.0",
     "aws-cdk-lib": "2.88.0",
     "cdk-dynamo-table-viewer": "^0.2.0",
-    "constructs": "^10.0.0"
+    "constructs": "^10.0.0",
+    "uuid": "^9.0.0"
   }
 }
