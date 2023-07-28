@@ -5,6 +5,7 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
 import * as sqsSubscriptions from 'aws-cdk-lib/aws-sns-subscriptions';
 import * as apigw from 'aws-cdk-lib/aws-apigateway';
+import * as lambdaEventSources from 'aws-cdk-lib/aws-lambda-event-sources';
 
 import * as path from 'path';
 import { Construct } from 'constructs';
@@ -40,7 +41,7 @@ export class lab3 extends cdk.Stack {
             environment: {
                 TABLE_NAME: ridesBookingTable.tableName,
                 TOPIC_ARN: requestForQuotesTopic.topicArn,
-            },
+            }
         });
 
         ridesBookingTable.grantReadWriteData(requestForQuotesService);
@@ -68,8 +69,7 @@ export class lab3 extends cdk.Stack {
             requestForQuotesTopic.addSubscription(new subscription.LambdaSubscription(unicornManagementResource));
 
         }
-        const sqsJobQueue = new sns.Topic(this, `UnicornManagementResourceSqsJob`);
-        sqsJobQueue.addSubscription(new sqsSubscriptions.SqsSubscription(requestForQuotesResponseQueue));
+
 
         // QuotesResponseService
         const quotesResponseService = new lambda.Function(this, 'QuotesResponseService', {
@@ -83,6 +83,24 @@ export class lab3 extends cdk.Stack {
 
         ridesBookingTable.grantReadWriteData(quotesResponseService);
 
+        const eventSource = new lambdaEventSources.SqsEventSource(requestForQuotesResponseQueue);
+
+        quotesResponseService.addEventSource(eventSource);
+
+        // queryForQuotesService
+        const queryForQuotesService = new lambda.Function(this, 'QueryForQuotesService', {
+            runtime: lambda.Runtime.NODEJS_16_X,
+            code: lambda.Code.fromAsset('lambda'),
+            handler: 'queryForQuotesService.handler',
+            environment: {
+                TABLE_NAME: ridesBookingTable.tableName,
+            },
+        });
+
+        new apigw.LambdaRestApi(this, 'QueryEndpoint', {
+            handler: queryForQuotesService,
+        });
+        ridesBookingTable.grantReadData(queryForQuotesService);
 
     }
 }
