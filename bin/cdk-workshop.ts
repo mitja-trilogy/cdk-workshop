@@ -9,10 +9,10 @@ import {Callback} from "../lib/callback";
 import {DetectSentiment} from "../lib/detectSentiment";
 import {ChoiceMap} from "../lib/choiceMap";
 import {Parallel} from "../lib/parallel";
-import {InputOutput} from "../lib/input-output";
+import {InputOutputProc} from "../lib/input-output";
 
 const app = new cdk.App();
-new InputOutput(app, 'InputOutput', {
+new InputOutputProc(app, 'InputOutputProc', {
     tags: {
         "Owner": "mitja.resek",
     }

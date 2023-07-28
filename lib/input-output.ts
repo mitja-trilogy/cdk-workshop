@@ -6,7 +6,7 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as apigw from 'aws-cdk-lib/aws-apigateway';
 
-export class InputOutput extends cdk.Stack {
+export class InputOutputProc extends cdk.Stack {
     public Machine: sfn.CfnStateMachine;
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
@@ -39,7 +39,7 @@ export class InputOutput extends cdk.Stack {
                         "Resource": "arn:aws:states:::lambda:invoke",
                         "Parameters": {
                             "Payload.$": "$",
-                            "FunctionName": "arn:aws:lambda:us-east-1:856284715153:function:Callback-req96DDE0A5-FztEPoGlfDi4:$LATEST"
+                            "FunctionName": lambdaReq.functionArn,
                         },
                         "Retry": [
                             {
