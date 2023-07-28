@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@aws-cdk/aws-lambda-nodejs": "^1.204.0",
+    "@aws-cdk/aws-stepfunctions-tasks": "^1.204.0",
     "aws-cdk-lib": "2.88.0",
     "cdk-dynamo-table-viewer": "^0.2.0",
     "constructs": "^10.0.0",
