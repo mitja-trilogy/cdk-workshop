@@ -2,7 +2,6 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as sfn from 'aws-cdk-lib/aws-stepfunctions';
 import * as iam from 'aws-cdk-lib/aws-iam';
-import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as apigw from 'aws-cdk-lib/aws-apigateway';
 
@@ -146,14 +145,6 @@ export class Parallel extends cdk.Stack {
                 }
             }
         };
-
-        // this.Machine = new sfn.CfnStateMachine(this, "parallel",
-        //     {
-        //         roleArn: statesExecutionRole.roleArn,
-        //         definitionString: JSON.stringify(stateMachineDefinition),
-        //         stateMachineName: "parallel",
-        //     }
-        // );
 
         const mapStateStateMachine = new sfn.StateMachine(this, 'ParallelStateMachine', {
             definitionBody: sfn.DefinitionBody.fromString(JSON.stringify(stateMachineDefinition)),

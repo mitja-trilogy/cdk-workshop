@@ -55,8 +55,6 @@ export class CdkWildRyde extends Stack {
       }
     });
 
-
-
     new apigw.LambdaRestApi(this, 'Endpoint', {
       handler: unicornService,
     });

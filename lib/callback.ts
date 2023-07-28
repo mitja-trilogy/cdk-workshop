@@ -3,12 +3,9 @@ import { Construct } from 'constructs';
 import * as sns from 'aws-cdk-lib/aws-sns';
 import {Stack, StackProps} from "aws-cdk-lib";
 import * as sfn from "aws-cdk-lib/aws-stepfunctions";
-import {SnsPublish} from "aws-cdk-lib/aws-stepfunctions-tasks";
-import {SqsSendMessage} from "aws-cdk-lib/aws-stepfunctions-tasks";
 import * as sqs from 'aws-cdk-lib/aws-sqs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as iam from 'aws-cdk-lib/aws-iam';
-import {json} from "stream/consumers";
 import * as lambdaEventSources from "aws-cdk-lib/aws-lambda-event-sources";
 
 
@@ -18,12 +15,10 @@ export class Callback extends cdk.Stack {
     constructor(scope: Construct, id: string, props: StackProps) {
         super(scope, id, props);
 
-        // Step 1: Create the SNS Topic
         const snsTopic = new sns.Topic(this, 'SNSTopic', {
             displayName: 'StepFunctionsTemplate-CallbackTopic',
         });
 
-        // Step 2: Create the SQS Queue and Dead Letter Queue (DLQ)
         const sqsQueue = new sqs.Queue(this, 'SQSQueue', {
             visibilityTimeout: cdk.Duration.seconds(30),
             deadLetterQueue: {
@@ -33,9 +28,6 @@ export class Callback extends cdk.Stack {
                 }),
             },
         });
-
-
-
 
         const iamRole = new iam.Role(this, 'StatesExecutionRole', {
             assumedBy: new iam.ServicePrincipal('states.amazonaws.com'),
@@ -59,7 +51,6 @@ export class Callback extends cdk.Stack {
             },
         });
 
-        // Step 4: Create the Step Function State Machine
         const stateMachineDefinition = {
             Comment: 'An example of the Amazon States Language for starting a task and waiting for a callback.',
             StartAt: 'Start Task And Wait For Callback',
@@ -114,7 +105,6 @@ export class Callback extends cdk.Stack {
             }
         );
 
-        // Step 3: Create the Lambda function for handling the callback
         const lambdaFunction = new lambda.Function(this, 'CallbackWithTaskToken', {
             runtime: lambda.Runtime.NODEJS_14_X,
             code: lambda.Code.fromAsset('lambda'),

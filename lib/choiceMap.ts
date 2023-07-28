@@ -67,7 +67,7 @@ export class ChoiceMap extends cdk.Stack {
                                 "Type": "Task",
                                 "Resource": "arn:aws:states:::dynamodb:putItem",
                                 "Parameters": {
-                                    "TableName": "MapStateTable",
+                                    "TableName": ddbTable.tableName,
                                     "Item": {
                                         "id": {
                                             "S.$": "$.orderId"
