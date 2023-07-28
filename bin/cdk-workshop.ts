@@ -7,9 +7,10 @@ import {BasicHelloWorld} from "../lib/basic-helloworld";
 import {RequestResponse} from "../lib/request-response";
 import {Callback} from "../lib/callback";
 import {DetectSentiment} from "../lib/detectSentiment";
+import {ChoiceMap} from "../lib/choiceMap";
 
 const app = new cdk.App();
-new DetectSentiment(app, 'Callback', {
+new ChoiceMap(app, 'Callback', {
     tags: {
         "Owner": "mitja.resek",
     }
