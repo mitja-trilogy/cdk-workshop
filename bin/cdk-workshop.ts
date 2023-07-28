@@ -8,9 +8,10 @@ import {RequestResponse} from "../lib/request-response";
 import {Callback} from "../lib/callback";
 import {DetectSentiment} from "../lib/detectSentiment";
 import {ChoiceMap} from "../lib/choiceMap";
+import {Parallel} from "../lib/parallel";
 
 const app = new cdk.App();
-new ChoiceMap(app, 'Callback', {
+new Parallel(app, 'Callback', {
     tags: {
         "Owner": "mitja.resek",
     }
