@@ -9,9 +9,10 @@ import {Callback} from "../lib/callback";
 import {DetectSentiment} from "../lib/detectSentiment";
 import {ChoiceMap} from "../lib/choiceMap";
 import {Parallel} from "../lib/parallel";
+import {InputOutput} from "../lib/input-output";
 
 const app = new cdk.App();
-new Parallel(app, 'Callback', {
+new InputOutput(app, 'InputOutput', {
     tags: {
         "Owner": "mitja.resek",
     }
