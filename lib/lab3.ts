@@ -3,11 +3,9 @@ import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as sns from 'aws-cdk-lib/aws-sns';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
-import * as sqsSubscriptions from 'aws-cdk-lib/aws-sns-subscriptions';
 import * as apigw from 'aws-cdk-lib/aws-apigateway';
 import * as lambdaEventSources from 'aws-cdk-lib/aws-lambda-event-sources';
 
-import * as path from 'path';
 import { Construct } from 'constructs';
 import * as subscription from "aws-cdk-lib/aws-sns-subscriptions";
 

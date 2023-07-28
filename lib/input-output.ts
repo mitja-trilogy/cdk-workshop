@@ -2,9 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as sfn from 'aws-cdk-lib/aws-stepfunctions';
 import * as iam from 'aws-cdk-lib/aws-iam';
-import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as apigw from 'aws-cdk-lib/aws-apigateway';
 
 export class InputOutputProc extends cdk.Stack {
     public Machine: sfn.CfnStateMachine;

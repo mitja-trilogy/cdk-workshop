@@ -37,6 +37,5 @@ export class RequestResponse extends cdk.Stack {
 
         snsTopic.grantPublish(this.Machine);
 
-
     }
 }
