@@ -4,9 +4,10 @@ import { CdkWildRyde } from '../lib/wild-ryde';
 import { CdkWorkshopStack } from '../lib/cdk-workshop-stack';
 import {lab3} from "../lib/lab3";
 import {BasicHelloWorld} from "../lib/basic-helloworld";
+import {RequestResponse} from "../lib/request-response";
 
 const app = new cdk.App();
-new BasicHelloWorld(app, 'StepFunctionsSampleStack', {
+new RequestResponse(app, 'RequestResponse', {
     tags: {
         "Owner": "mitja.resek",
     }
