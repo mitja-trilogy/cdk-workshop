@@ -74,7 +74,7 @@ export class ErrorHandling extends cdk.Stack {
             "States": {
                 "StartExecution": {
                     "Type": "Task",
-                    "Resource": lambdaErrorHandling.functionArn,
+                    "Resource": lambdaErrorTimeout.functionArn,
                     "TimeoutSeconds": 5,
                     "Catch": [ {
                         "ErrorEquals": ["CustomError"],
