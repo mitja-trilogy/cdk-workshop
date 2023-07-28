@@ -5,9 +5,10 @@ import { CdkWorkshopStack } from '../lib/cdk-workshop-stack';
 import {lab3} from "../lib/lab3";
 import {BasicHelloWorld} from "../lib/basic-helloworld";
 import {RequestResponse} from "../lib/request-response";
+import {Callback} from "../lib/callback";
 
 const app = new cdk.App();
-new RequestResponse(app, 'RequestResponse', {
+new Callback(app, 'Callback', {
     tags: {
         "Owner": "mitja.resek",
     }
