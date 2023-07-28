@@ -6,9 +6,10 @@ import {lab3} from "../lib/lab3";
 import {BasicHelloWorld} from "../lib/basic-helloworld";
 import {RequestResponse} from "../lib/request-response";
 import {Callback} from "../lib/callback";
+import {DetectSentiment} from "../lib/detectSentiment";
 
 const app = new cdk.App();
-new Callback(app, 'Callback', {
+new DetectSentiment(app, 'Callback', {
     tags: {
         "Owner": "mitja.resek",
     }
